@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SessionManagement.Models.Employee>
+﻿@*@model IEnumerable<SessionManagement.Models.Employee>*@
 
 @{
     ViewBag.Title = "Index";
@@ -12,41 +12,135 @@
     </p>
 }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Salary)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Designation)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table class="table" id="employeetable" action="Dashboard/AddEmployee">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salary)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Designation)
-            </td>
-            @if (User.IsInRole("admin"))
-            {
-                <td>
-                    @Html.ActionLink("Edit", "EditEmployee", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "DeleteEmployee", new { id = item.Id })
-                </td>
-            }
-
+            <th>
+                S.No
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Salary
+            </th>
+            <th>
+                Designation
+            </th>
+            <th></th>
         </tr>
-    }
+
+    </thead>
+    <tbody id="employeeTableBody">
+    </tbody>
+    @*@foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Designation)
+                </td>
+                @if (User.IsInRole("admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "EditEmployee", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "DeleteEmployee", new { id = item.Id })
+                    </td>
+                }
+
+            </tr>
+        }*@
 
 </table>
+
+<script>
+    let isAdmin = "@User.IsInRole("admin")";
+
+    $(function () {
+        getEmployeesFromApi()
+            .then((data) => {
+                console.log(data);
+                data.forEach((emp, index) => {
+                    let employeeTableBody = document.getElementById('employeeTableBody');
+
+
+                    let row = employeeTableBody.insertRow(-1);
+
+                    let sno = row.insertCell(0);
+                    sno.innerText = index+1;
+
+                    let Name = row.insertCell(1);
+                    Name.innerText = emp.Name;
+
+                    let salary = row.insertCell(2);
+                    salary.innerText = emp.Salary;
+
+                    let designation = row.insertCell(3);
+                    designation.innerText = emp.Designation;
+
+                    if (isAdmin == "True") {
+                        let editAndDelete = row.insertCell(4);
+                        editAndDelete.innerHTML = `<a href='http://localhost:61577/Dashboard/EditEmployee/${emp.Id}' id=${emp.Id}'>Edit</a> | <a href='#' id=${emp.Id} onclick="deleteEmployeeData(event)">Delete</a>`;
+                    }
+
+
+                    //$('#employeeTableBody').appendChild(row);
+                });
+            })
+            .catch((data) => {
+                alert(data);
+            });
+    });
+
+    function getEmployeesFromApi() {
+        return new Promise((res, rej) => {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:52924/api/Employee',
+                headers: {
+                    'Authorization': 'X12345678'
+                },
+                success: function (response) {
+                    //if (response.status == 200) {
+                        res(response);
+                    //}
+                },
+                error: function (response) {
+                    rej('failed to fetch records');
+                }
+            })
+        })
+    }
+
+    function deleteEmployeeData(event) {
+        const id = event.target.id;
+        const answer = confirm('Are you sure you want to delete this record');
+        if (answer) {
+            $.ajax({
+                type: "DELETE",
+                url: 'http://localhost:52924/api/Employee/' + Number(id),
+                headers: {
+                    'Authorization': 'X12345678'
+                },
+                complete: function (response) {
+                    if (response.status == 200) {
+                        $.ajax({
+                            type: 'GET',
+                            url: 'Employee/DeleteEmployee/' + Number(id)
+                        })
+                    }
+                },
+                error: function (response) {
+                    alert(response);
+                }
+            })
+        }
+    }
+
+    //console.log(employees);
+</script>

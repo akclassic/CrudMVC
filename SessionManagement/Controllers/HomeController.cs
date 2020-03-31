@@ -31,13 +31,18 @@ namespace SessionManagement.Controllers
         [HttpPost]
         public ActionResult Login(Users user)
         {
+            FormsAuthentication.SetAuthCookie(user.Username, false);
+            Session["username"] = user.Username.ToString();
+            Session["tokenkey"] = "X12345678";
+            return RedirectToAction("Index", "Dashboard");
+
             //IEnumerable<Users> users = null;
 
             //using (var client = new HttpClient())
             //{
-            //    client.BaseAddress = new Uri("http://localhost:64189/api/");
+            //    client.BaseAddress = new Uri("http://localhost:52924/api/");
             //    //HTTP GET
-            //    var responseTask = client.GetAsync("student");
+            //    var responseTask = client.GetAsync("Users");
             //    responseTask.Wait();
 
             //    var result = responseTask.Result;
@@ -47,35 +52,47 @@ namespace SessionManagement.Controllers
             //        readTask.Wait();
 
             //        users = readTask.Result;
+            //        bool isValidUser = users.Any(u => u.Username == user.Username && u.Password == user.Password);
+
+            //        if (isValidUser)
+            //        {
+            //            FormsAuthentication.SetAuthCookie(user.Username, false);
+            //            Session["username"] = user.Username.ToString();
+            //            Session["tokenkey"] = "X12345678";
+            //            return RedirectToAction("Index", "Dashboard");
+            //        }
+            //        else
+            //        {
+            //            return View("Index");
+            //        }
             //    }
             //    else //web api sent error response 
             //    {
-            //        //log response status here..
-
-            //        students = Enumerable.Empty<StudentViewModel>();
+            //        //log response status here.
 
             //        ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+            //        return View();
             //    }
             //}
-            //return View(students);
-            UsersBusinessLayer usersBusinessLayer = new UsersBusinessLayer();
-            List<Users> users = usersBusinessLayer.users.ToList();
-            bool isValidUser = users.Any(u => u.Username == user.Username && u.Password == user.Password);
-            if (isValidUser)
-            {
-                FormsAuthentication.SetAuthCookie(user.Username, false);
-                Session["username"] = user.Username.ToString();
-                return RedirectToAction("Index", "Dashboard");
-            }
-            else if(!isValidUser || !ModelState.IsValid)
-            {
-                ModelState.AddModelError("", "Invalid username or password");
-                return View();
-            }
-            else
-            {
-                return View("Index");
-            }
+
+            //UsersBusinessLayer usersBusinessLayer = new UsersBusinessLayer();
+            //List<Users> users = usersBusinessLayer.users.ToList();
+            //bool isValidUser = users.Any(u => u.Username == user.Username && u.Password == user.Password);
+            //if (isValidUser)
+            //{
+            //    FormsAuthentication.SetAuthCookie(user.Username, false);
+            //    Session["username"] = user.Username.ToString();
+            //   return RedirectToAction("Index", "Dashboard");
+            //}
+            // else if (!isValidUser || !ModelState.IsValid)
+            //{
+            //   ModelState.AddModelError("", "Invalid username or password");
+            //   return View();
+            //}
+            //else
+            //{
+            //   return View("Index");
+            //}
         }
 
         public ActionResult About()

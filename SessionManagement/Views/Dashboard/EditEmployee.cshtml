@@ -1,52 +1,142 @@
-﻿@model SessionManagement.Models.Employee
+﻿@*@model SessionManagement.Models.Employee*@
 
 @{
     ViewBag.Title = "EditEmployee";
+
 }
 
-<h2>EditEmployee</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
+<h2>Edit Employee Details</h2>
+
+<form id="editEmployeeForm" action="http://localhost:61577/Dashboard/EditEmployee" method="post">
     <div class="form-horizontal">
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            <label class="control-label col-md-2">Id</label>
+            <div class="form-group">
+                <input type="text" id="EmployeeId" class="form-control" required  disabled value="@ViewBag.id"/>
             </div>
         </div>
-
         <div class="form-group">
-            @Html.LabelFor(model => model.Salary, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Salary, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
+            <label class="control-label col-md-2">Name</label>
+            <div class="form-group">
+                <input type="text" id="Name" class="form-control" required />
             </div>
         </div>
-
         <div class="form-group">
-            @Html.LabelFor(model => model.Designation, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+            <label class="control-label col-md-2">Salary</label>
+            <div class="form-group">
+                <input type="text" id="Salary" class="form-control" required />
             </div>
         </div>
-
+        <div class="form-group">
+            <label class="control-label col-md-2">Designation</label>
+            <div class="form-group">
+                <input type="text" id="Designation" class="form-control" required />
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="button" value="Save" class="btn btn-default" onclick="editEmployeeDetails()" />
             </div>
         </div>
     </div>
-}
+</form>
+
+@*@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Salary, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Salary, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Designation, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }*@
 
 <div>
     @Html.ActionLink("Back to Dashboard", "Index")
 </div>
+
+<script>
+    let id = @ViewBag.id;
+    $(function () {
+        getEmployeeById();
+    });
+
+    function getEmployeeById() {
+
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:52924/api/Employee/' + id,
+            headers: {
+                'Authorization': 'X12345678'
+            },
+            complete: function (response) {
+                if (response.status == 200) {
+                    $('#Name').val(response.responseJSON[0].Name);
+                    $('#Salary').val(response.responseJSON[0].Salary);
+                    $('#Designation').val(response.responseJSON[0].Designation);
+                }
+            },
+            error: function (response) {
+                alert('failed to fetch employee data');
+            }
+        })
+    }
+
+    function editEmployeeDetails() {
+        const employee = {
+            Id: $('#EmployeeId').val(),
+            Name: $('#Name').val(),
+            Salary: $('#Salary').val(),
+            Designation: $('#Designation').val()
+        }
+
+        $.ajax({
+            type: 'PUT',
+            url: 'http://localhost:52924/api/Employee/' + id,
+            headers: {
+                'Authorization': 'X12345678'
+            },
+            data: JSON.stringify(employee),
+            contentType: 'application/json',
+            complete: function (response) {
+                $('#editEmployeeForm').submit();
+            },
+            error: function (response) {
+                alert('failed to updated details');
+            }
+        })
+    }
+</script>

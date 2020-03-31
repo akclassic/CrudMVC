@@ -1,5 +1,3 @@
-C:\Users\ankit\source\repos\SessionManagement\SessionManagement\obj\Debug\SessionManagement.csprojAssemblyReference.cache
-C:\Users\ankit\source\repos\SessionManagement\SessionManagement\obj\Debug\SessionManagement.csproj.CoreCompileInputs.cache
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\SessionManagement.dll.config
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\SessionManagement.dll
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\SessionManagement.pdb
@@ -56,6 +54,7 @@ C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\Antlr3.Runti
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\Newtonsoft.Json.dll
+C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\System.Net.Http.Formatting.dll
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\System.Web.Helpers.dll
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\System.Web.Mvc.dll
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\System.Web.Optimization.dll
@@ -64,6 +63,7 @@ C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\System.Web.W
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\System.Web.WebPages.dll
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\System.Web.WebPages.Razor.dll
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\WebGrease.dll
+C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\System.Net.Http.Formatting.xml
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\System.Web.Helpers.xml
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\System.Web.Mvc.xml
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\System.Web.Optimization.xml
@@ -74,6 +74,8 @@ C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\System.Web.W
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\Newtonsoft.Json.xml
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\Antlr3.Runtime.pdb
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\ankit\source\repos\SessionManagement\SessionManagement\obj\Debug\SessionManagement.csprojAssemblyReference.cache
+C:\Users\ankit\source\repos\SessionManagement\SessionManagement\obj\Debug\SessionManagement.csproj.CoreCompileInputs.cache
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\obj\Debug\SessionManagement.csproj.CopyComplete
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\obj\Debug\SessionManagement.dll
 C:\Users\ankit\source\repos\SessionManagement\SessionManagement\obj\Debug\SessionManagement.pdb
